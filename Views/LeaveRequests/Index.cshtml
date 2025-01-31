@@ -1,0 +1,85 @@
+﻿@model IEnumerable<EmployeeLeaves.Models.LeaveRequest>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="dst-page-title">
+    <h1><i class='fas fa-user-alt'></i>&nbsp;&nbsp;&nbsp;Leave requests</h1>
+</div>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead class="dst-table-header">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDate)
+            </th>
+            <th>
+                Requested Days
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResponseDate)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr class="dst-table-row">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td>
+                    @{
+                        string dd = "";
+                        foreach (RequestedDay d in item.RequestedDays) 
+                        {
+                            dd += d.LeaveDay.ToShortDateString() + Environment.NewLine;
+                        }
+                        <span title=@dd>@item.RequestedDays.Count</span>
+                    }
+                </td>
+                <td>
+                    @* @Html.DisplayFor(modelItem => item.Status) *@
+                    @switch(item.Status)
+                    {
+                        case EmployeeLeaves.Enums.RequestStatus.Approved:
+                            <i class='fas fa-check-circle' style='color:green; font-size:20px;' title=@EmployeeLeaves.Enums.RequestStatus.Approved.ToString()></i>
+                            break;
+                        case EmployeeLeaves.Enums.RequestStatus.Rejected:
+                            <i class='fas fa-times-circle' style='color:red; font-size:20px;' title=@EmployeeLeaves.Enums.RequestStatus.Rejected.ToString()></i>
+                            break;
+                        case EmployeeLeaves.Enums.RequestStatus.Pending:
+                            <i class='far fa-hourglass' style='color:darkorange; font-size:20px;' title=@EmployeeLeaves.Enums.RequestStatus.Pending.ToString()></i>
+                            break;
+                        default:
+                            <i class='far fa-hourglass' style='color:darkorange; font-size:20px;' title=@EmployeeLeaves.Enums.RequestStatus.Pending.ToString()></i>
+                            break;
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResponseDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

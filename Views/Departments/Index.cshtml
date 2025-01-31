@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EmployeeLeaves.Models.Department>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="dst-page-title">
+    <h1><i class='fas fa-users'></i>&nbsp;&nbsp;&nbsp;Departments List</h1>
+</div>
+
+<p>
+    @* <a asp-action="Create">Create New</a> *@
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Departments")'"><i class='fas fa-plus' style="margin-right:8px;"></i>Add Department</button>
+</p>
+
+<table class="table">
+    <thead class="dst-table-header">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="dst-table-row">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"><span class="far fa-edit" style="font-size:large;"></span></a>&nbsp;&nbsp;
+                <a asp-action="Details" asp-route-id="@item.Id" title="Details"><span class="far fa-file-alt" style="font-size:large;"></span></a>&nbsp;&nbsp;
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><span class="far fa-trash-alt" style="font-size:large; color:red;"></span></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

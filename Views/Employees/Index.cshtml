@@ -1,0 +1,150 @@
+﻿@model IEnumerable<EmployeeLeaves.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="dst-page-title">
+    <h1><i class='fas fa-user-alt'></i>&nbsp;&nbsp;&nbsp;Employees List</h1>
+</div>
+
+<div class="row opensans_font" style="margin-bottom:10px;">
+    <div class="col-sm-4" style="text-align:left;">
+        <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Employees")'"><i class='fas fa-plus' style="margin-right:8px;"></i>Add Employee</button>
+    </div>
+    <div class="col-sm-4" style="text-align:left;">
+        @* <div class="form-group">
+            <label for="sel1">Select page size:</label>
+            <select class="form-control" id="pageSize">
+                <option>5</option>
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+            </select>
+        </div> *@
+        @* <div class="list-group list-group-horizontal">
+            <a href="#" class="list-group-item active">10</a>
+            <a href="#" class="list-group-item">20</a>
+            <a href="#" class="list-group-item">30</a>
+            <a href="#" class="list-group-item">50</a>
+        </div> *@
+    </div>
+    @* <div class="col-sm-4" style="text-align:center; padding-top: 7px;">
+        <i id="ToggleShowInactive" class="fa fa-toggle-off" style="font-size:x-large; margin-right:10px; color:lightgrey; cursor:pointer;"></i><span>Αποχωρήσαντες</span>
+    </div> *@
+    <div class="col-sm-4">
+        <div class="input-group" style="text-align:right;">
+            <input class="form-control" id="searchInput" type="text" placeholder="Search..">
+            <span class="input-group-addon" style="background-color:inherit; cursor:pointer; font-size:large;" id="btnClearFilter"><i class="fa fa-close"></i></span>
+        </div>      
+    </div>
+</div>
+
+<table class="table">
+    <thead class="dst-table-header">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            @* <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>           
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfHire)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfRedundancy)
+            </th> *@
+            <th>
+                @Html.DisplayNameFor(model => model.ApproverId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsApprover)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsManager)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAdmin)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="dst-table-row">
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Title)
+            </td>
+                @* <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>           
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth, "{0:MM/dd/yyyy}")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfHire, "{0:MM/dd/yyyy}")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfRedundancy, "{0:MM/dd/yyyy}")
+            </td> *@
+            <td>
+                @Html.DisplayFor(modelItem => item.Approver.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsApprover)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsManager)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAdmin)
+            </td>
+            
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" title="Edit"><span class="far fa-edit" style="font-size:large;"></span></a>&nbsp;&nbsp;
+                <a asp-action="Details" asp-route-id="@item.Id" title="Details"><span class="far fa-file-alt" style="font-size:large;"></span></a>&nbsp;&nbsp;
+                <a asp-action="Delete" asp-route-id="@item.Id" title="Delete"><span class="far fa-trash-alt" style="font-size:large; color:red;"></span></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="list-group list-group-horizontal list-group-horizontal-sm dst-page-size">
+            <a asp-action="Index" asp-route-page="1" asp-route-pagesize="10" class="list-group-item @((int)ViewData["PageSize"] == 10 ? "active" : "")">10</a>
+            <a asp-action="Index" asp-route-page="1" asp-route-pagesize="20" class="list-group-item @((int)ViewData["PageSize"] == 20 ? "active" : "")">20</a>
+            <a asp-action="Index" asp-route-page="1" asp-route-pagesize="30" class="list-group-item @((int)ViewData["PageSize"] == 30 ? "active" : "")">30</a>
+            <a asp-action="Index" asp-route-page="1" asp-route-pagesize="50" class="list-group-item @((int)ViewData["PageSize"] == 50 ? "active" : "")">50</a>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <ul class="pagination justify-content-center" style="margin:20px 0">
+            <li class="page-item @((int)ViewData["PageNo"] == 1 ? "disabled" : "")"><a class="page-link" asp-action="Index" asp-route-page="1"><i class="fas fa-angle-double-left" title="First"></i></a></li>
+            <li class="page-item @((int)ViewData["PageNo"] == 1 ? "disabled" : "")"><a class="page-link" asp-action="Index" asp-route-page=@((int)ViewData["PageNo"] > 1 ? (int)ViewData["PageNo"] - 1 : 1)><i class="fas fa-angle-left" title="Previous"></i></a></li>
+            @for(int i = 1; i<=(int)ViewData["TotalPages"]; i++) 
+            {
+                <li class="page-item"><a class="page-link @((int)ViewData["PageNo"] == i ? "dst-bold" : "")" asp-action="Index" asp-route-page=@i>@i</a></li>
+            }
+        
+            <li class="page-item @((int)ViewData["PageNo"] == (int)ViewData["TotalPages"] ? "disabled" : "")"><a class="page-link" asp-action="Index" asp-route-page=@((int)ViewData["PageNo"] + 1)><i class="fas fa-angle-right" title="Next"></i></a></li>
+            <li class="page-item @((int)ViewData["PageNo"] == (int)ViewData["TotalPages"] ? "disabled" : "")"><a class="page-link" asp-action="Index" asp-route-page=@((int)ViewData["TotalPages"])><i class="fas fa-angle-double-right" title="Last"></i></a></li>
+        </ul>
+    </div>
+    <div class="col-sm-3 dst-page-counter">
+        @("Page " + ViewData["PageNo"] + " of " + ViewData["TotalPages"])
+    </div>
+</div>
+
