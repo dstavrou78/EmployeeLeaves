@@ -18,7 +18,7 @@ namespace EmployeeLeaves.Models
         [Required]
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
-        public ICollection<RequestedDay> RequestedDays { get; set; } = new List<RequestedDay>();
+        public List<RequestedDay> RequestedDays { get; set; } = new List<RequestedDay>();
 
 
 }

@@ -36,6 +36,6 @@ namespace EmployeeLeaves.Models
         public bool IsAdmin { get; set; } = false;
         public virtual Department? Department { get; set; }
         public virtual Employee? Approver { get; set; }
-        public ICollection<LeaveRequest> LeaveRequests { get; set; } = new List<LeaveRequest>();
+        public List<LeaveRequest> LeaveRequests { get; set; } = new List<LeaveRequest>();
     }
 }

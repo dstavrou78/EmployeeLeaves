@@ -22,15 +22,20 @@ namespace EmployeeLeaves.Controllers
         // GET: Employees
         public async Task<IActionResult> Index(int? page, int? pageSize)
         {
-            int _pageSize = (int)(pageSize != null ? pageSize : 10); ;
+            var leavesContext = _context.Employees.Include(e => e.Department);
+
+            //int _pageSize = (int)(pageSize != null ? pageSize : 10);
+            int _pageSize = (int)(pageSize != null ? pageSize : leavesContext.Count());
             int _page = (int)(page != null ? page : 1);
             _page = _page > 0 ? _page : 1;
 
-            var leavesContext = _context.Employees.Include(e => e.Department);
+            ViewBag.PageNo = _page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = (int)Math.Ceiling((decimal)leavesContext.Count() / _pageSize);
 
-            ViewData["PageNo"] = _page;
-            ViewData["PageSize"] = _pageSize;
-            ViewData["TotalPages"] = (int)Math.Ceiling((decimal)leavesContext.Count() / _pageSize);
+            //ViewData["PageNo"] = _page;
+            //ViewData["PageSize"] = pageSize;
+            //ViewData["TotalPages"] = (int)Math.Ceiling((decimal)leavesContext.Count() / _pageSize);
 
             return View(await leavesContext.Skip((_page - 1) * _pageSize).Take(_pageSize).ToListAsync());
         }

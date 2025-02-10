@@ -316,7 +316,9 @@ namespace EmployeeLeaves.Models
             modelBuilder.Entity<LeaveRequest>().HasData(
                 new LeaveRequest { Id = 1, EmployeeId = 1, Status = Enums.RequestStatus.Approved, RequestDate = new DateTime(2025, 01, 10), ResponseDate = new DateTime(2025, 01, 10) },
                 new LeaveRequest { Id = 2, EmployeeId = 2, Status = Enums.RequestStatus.Pending, RequestDate = new DateTime(2025, 01, 12), ResponseDate = null },
-                new LeaveRequest { Id = 3, EmployeeId = 3, Status = Enums.RequestStatus.Rejected, RequestDate = new DateTime(2025, 01, 10), ResponseDate = new DateTime(2025, 01, 10) }
+                new LeaveRequest { Id = 3, EmployeeId = 3, Status = Enums.RequestStatus.Rejected, RequestDate = new DateTime(2025, 01, 10), ResponseDate = new DateTime(2025, 01, 10) },
+                new LeaveRequest { Id = 4, EmployeeId = 1, Status = Enums.RequestStatus.Pending, RequestDate = new DateTime(2025, 01, 10), ResponseDate = null },
+                new LeaveRequest { Id = 5, EmployeeId = 1, Status = Enums.RequestStatus.Rejected, RequestDate = new DateTime(2025, 01, 10), ResponseDate = new DateTime(2025, 01, 10) }
             );
 
             modelBuilder.Entity<RequestedDay>().HasData(
@@ -325,7 +327,9 @@ namespace EmployeeLeaves.Models
                 new RequestedDay { Id = 3, LeaveDay = new DateTime(2025, 2, 3), LeaveRequestId = 1, Year = 2025 },
                 new RequestedDay { Id = 4, LeaveDay = new DateTime(2025, 2, 1), LeaveRequestId = 2, Year = 2025 },
                 new RequestedDay { Id = 5, LeaveDay = new DateTime(2025, 2, 1), LeaveRequestId = 2, Year = 2025 },
-                new RequestedDay { Id = 6, LeaveDay = new DateTime(2025, 2, 1), LeaveRequestId = 3, Year = 2025 }
+                new RequestedDay { Id = 6, LeaveDay = new DateTime(2025, 2, 1), LeaveRequestId = 3, Year = 2025 },
+                new RequestedDay { Id = 7, LeaveDay = new DateTime(2025, 6, 1), LeaveRequestId = 4, Year = 2025 },
+                new RequestedDay { Id = 8, LeaveDay = new DateTime(2025, 4, 1), LeaveRequestId = 5, Year = 2025 }
             );
 
 

@@ -1,0 +1,175 @@
+﻿@model EmployeeLeaves.Models.EmployeeStatisticsViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+<div class="dst-page-title">
+    <h1><i class='fas fa-chart-pie'></i>&nbsp;&nbsp;&nbsp;Employee Statistics - @Model.Employee.FullName</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <canvas id="PieChart" style="width:100%;max-width:700px; margin-bottom:25px;"></canvas>
+            
+        </div>
+        <div class="col-sm-6">
+            <canvas id="BarChart" style="width:100%;max-width:700px"></canvas>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <table class="table">
+                <thead class="dst-table-header">
+                    <tr>
+                        <th></th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.Employee) *@
+                            Request Date
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.Department) *@
+                            Requested Days
+                        </th>
+                         <th>
+                            @* @Html.DisplayNameFor(model => model.Email) *@
+                            Status
+                        </th>           
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.DateOfBirth) *@
+                            Response Date
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int RowNo = 0;
+                    }
+                    @foreach (var item in Model.LeaveRequests.OrderByDescending(x => x.RequestDate))
+                    {
+                        <tr class="dst-table-row">
+                            <td>
+                                @{
+                                    RowNo++;
+                                } @(RowNo.ToString() + ".")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RequestedDays.Count)
+                            </td>
+                            <td>
+                                @* @Html.DisplayFor(modelItem => item.Status) *@
+                                @switch (item.Status)
+                                {
+                                    case EmployeeLeaves.Enums.RequestStatus.Approved:
+                                        <i class='fas fa-check-circle' style='color:green; font-size:20px;' title=@EmployeeLeaves.Enums.RequestStatus.Approved.ToString()></i>
+                                        break;
+                                    case EmployeeLeaves.Enums.RequestStatus.Rejected:
+                                        <i class='fas fa-times-circle' style='color:red; font-size:20px;' title=@EmployeeLeaves.Enums.RequestStatus.Rejected.ToString()></i>
+                                        break;
+                                    case EmployeeLeaves.Enums.RequestStatus.Pending:
+                                        <i class='far fa-hourglass' style='color:darkorange; font-size:20px;' title=@EmployeeLeaves.Enums.RequestStatus.Pending.ToString()></i>
+                                        break;
+                                    default:
+                                        <i class='far fa-hourglass' style='color:darkorange; font-size:20px;' title=@EmployeeLeaves.Enums.RequestStatus.Pending.ToString()></i>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ResponseDate)
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    var xValues = ["Approved", "Pending", "Rejected", "Remaining"];
+    var yValues = [@Model.LeaveDaysApproved, @Model.LeaveDaysPendingApproval, @Model.LeaveDaysRejected, @Model.LeaveDaysRemaining];
+    var barColors = [
+      'rgba(0, 200, 0, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(200, 0, 0, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ];
+    var borderColors = [
+      'rgb(0, 200, 0)',
+      'rgb(255, 159, 64)',
+      'rgb(200, 0, 0)',
+      'rgb(201, 203, 207)'
+    ];
+
+    new Chart("PieChart", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          borderColor: borderColors,
+          borderWidth: 1,
+          data: yValues
+        }]
+      },
+      options: {
+        resposive: true,
+        title: {
+          display: true,
+          text: @Model.Year
+        }
+      }
+    });
+
+    
+    xValues = [];
+    yValues = [];
+
+    @foreach (var d in Model.LeaveDaysPerMonth)
+    {
+        @:xValues.push("@d.Key");
+        @:yValues.push(@d.Value);
+    }
+
+    new Chart("BarChart", {
+      type: "bar",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgb(54, 162, 235)',
+          borderWidth: 1,
+          data: yValues
+        }]
+      },
+      options: {
+        resposive: true,
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "Leaves per month for " + @Model.Year
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: 1
+                },
+
+            }]
+        }
+      }
+    });
+</script>
+
+
+
