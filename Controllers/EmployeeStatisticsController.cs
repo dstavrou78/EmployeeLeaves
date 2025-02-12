@@ -36,7 +36,7 @@ namespace EmployeeLeaves.Controllers
             employeeStatistics.LeaveDaysApproved = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Approved).SelectMany(x => x.RequestedDays).Count();
             employeeStatistics.LeaveDaysPendingApproval = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Pending).SelectMany(x => x.RequestedDays).Count();
             employeeStatistics.LeaveDaysRejected = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Rejected).SelectMany(x => x.RequestedDays).Count(); ;
-            employeeStatistics.LeaveDaysRemaining = employeeStatistics.AnnualLeaveDays - employeeStatistics.LeaveDaysApproved - employeeStatistics.LeaveDaysPendingApproval - employeeStatistics.LeaveDaysRejected;
+            employeeStatistics.LeaveDaysRemaining = employeeStatistics.AnnualLeaveDays - employeeStatistics.LeaveDaysApproved - employeeStatistics.LeaveDaysPendingApproval;
 
             var leaveDaysDictionary = employee.LeaveRequests
                 .Where(x => x.Status == RequestStatus.Approved)
