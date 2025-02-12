@@ -10,14 +10,446 @@
     <h1><i class='fas fa-chart-pie'></i>&nbsp;&nbsp;&nbsp;Employee Statistics - @Model.Employee.FullName</h1>
 </div>
 
+<div style="text-align:center; margin-top:0px; font-size:xx-large;">
+    <a asp-action="Index" class="dst-previous-year" asp-route-employeeid="@Model.Employee.Id" asp-route-year="@(Model.Year - 1)" title="Previous year"><span class="fas fa-chevron-left" style="font-size:large;"></span></a>
+    <span>@Model.Year</span>
+    <a asp-action="Index" class="dst-next-year" asp-route-employeeid="@Model.Employee.Id" asp-route-year="@(Model.Year + 1)" title="Next year"><span class="fas fa-chevron-right" style="font-size:large;"></span></a>
+</div>
+<hr>
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
-            <canvas id="PieChart" style="width:100%;max-width:700px; margin-bottom:25px;"></canvas>
-            
+            <canvas id="PieChart" style="width:100%;max-width:700px; margin-bottom:25px;"></canvas>            
         </div>
         <div class="col-sm-6">
             <canvas id="BarChart" style="width:100%;max-width:700px"></canvas>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9 dropshadow" style="border:0px solid lightgray; border-radius:5px; margin-top:30px; margin-bottom:30px;">
+                <table id="calendar" style="width: 100%;">
+                    <tr data-value="1">
+                        <td class="month-cell">JAN</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell">31</td>
+                    </tr>
+                    <tr data-value="2">
+                        <td class="month-cell">FEB</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell" id="Feb29">29</td>
+                        <td class="day-cell"></td>
+                        <td class="day-cell"></td>
+                    </tr>
+                    <tr data-value="3">
+                        <td class="month-cell">MAR</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell">31</td>
+                    </tr>
+                    <tr data-value="4">
+                        <td class="month-cell">APR</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell"></td>
+                    </tr>
+                    <tr data-value="5">
+                        <td class="month-cell">MAY</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell">31</td>
+                    </tr>
+                    <tr data-value="6">
+                        <td class="month-cell">JUN</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell"></td>
+                    </tr>
+                    <tr data-value="7">
+                        <td class="month-cell">JUL</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell">31</td>
+                    </tr>
+                    <tr data-value="8">
+                        <td class="month-cell">AUG</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell">31</td>
+                    </tr>
+                    <tr data-value="9">
+                        <td class="month-cell">SEP</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell"></td>
+                    </tr>
+                    <tr data-value="10">
+                        <td class="month-cell">OCT</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell">31</td>
+                    </tr>
+                    <tr data-value="11">
+                        <td class="month-cell">NOV</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell"></td>
+                    </tr>
+                    <tr data-value="12">
+                        <td class="month-cell">DEC</td>
+                        <td class="day-cell">1</td>
+                        <td class="day-cell">2</td>
+                        <td class="day-cell">3</td>
+                        <td class="day-cell">4</td>
+                        <td class="day-cell">5</td>
+                        <td class="day-cell">6</td>
+                        <td class="day-cell">7</td>
+                        <td class="day-cell">8</td>
+                        <td class="day-cell">9</td>
+                        <td class="day-cell">10</td>
+                        <td class="day-cell">11</td>
+                        <td class="day-cell">12</td>
+                        <td class="day-cell">13</td>
+                        <td class="day-cell">14</td>
+                        <td class="day-cell">15</td>
+                        <td class="day-cell">16</td>
+                        <td class="day-cell">17</td>
+                        <td class="day-cell">18</td>
+                        <td class="day-cell">19</td>
+                        <td class="day-cell">20</td>
+                        <td class="day-cell">21</td>
+                        <td class="day-cell">22</td>
+                        <td class="day-cell">23</td>
+                        <td class="day-cell">24</td>
+                        <td class="day-cell">25</td>
+                        <td class="day-cell">26</td>
+                        <td class="day-cell">27</td>
+                        <td class="day-cell">28</td>
+                        <td class="day-cell">29</td>
+                        <td class="day-cell">30</td>
+                        <td class="day-cell">31</td>
+                    </tr>
+
+                </table>
+
+                <table id="legend" style="width: 100%; margin-top:15px; font-size:small" cellspacing="5" cellpadding="5">
+                    <tr style="height:20px;">
+                        <td style="width:30px; background-color:#cccccc;"></td>
+                        <td>Weekend</td>
+                        <td style="width:30px; background-color:gold;"></td>
+                        <td>Today</td>
+                        <td style="width:30px; background-color:#228B22;"></td>
+                        <td>Leave days</td>
+                    </tr>
+                </table>
         </div>
     </div>
 
@@ -170,6 +602,37 @@
       }
     });
 </script>
+
+@* @section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#CurrentYear").val(@Model.Year);
+
+            $("#btnNextYear").on('click', function () {
+                if (parseInt($("#CurrentYear").val()) == new Date().getFullYear() + 1) {
+                    return;
+                }
+                $("#CurrentYear").val(parseInt($("#CurrentYear").val()) + 1);
+            });
+
+
+            $("#btnPrevYear").on('click', function () {
+                $("#CurrentYear").val(parseInt($("#CurrentYear").val()) - 1);
+
+                        $.ajax({
+            // edit to add steve's suggestion.
+            //url: "/ControllerName/ActionName",
+            url: "EmployeeStatistics/Index?employeeid="+@Model.Employee.Id+"&Year="+$("#CurrentYear").val(),
+            success: function(data) {
+                 // your data could be a View or Json or what ever you returned in your action method
+                 // parse your data here
+                 //alert(data);
+            }
+        });
+            });
+        });
+    </script>
+} *@
 
 
 

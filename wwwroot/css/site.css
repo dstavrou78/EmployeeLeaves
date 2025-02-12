@@ -68,3 +68,70 @@ tr.dst-table-row:hover {
 thead.dst-table-header {
     background: #DEDEDE;
 }
+
+dst-previous-year {
+    margin-right: 20px;
+    font-size: x-large;
+}
+
+dst-next-year {
+    margin-left: 20px;
+    font-size: x-large;
+}
+
+.day-cell {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #666;
+    border-collapse: collapse;
+    font-weight: normal;
+}
+
+.month-cell {
+    width: 40px;
+    height: 30px;
+    font-size: 12px;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    text-align: left;
+    border: 0px;
+    color: #666;
+    /*font-weight: bold;*/
+}
+
+.has-leave {
+    background-color: #228B22;
+    color: white;
+    cursor: pointer;
+    /*background:linear-gradient(135deg,darkgreen,lightgreen);*/
+    /*border-radius:100%;*/
+}
+
+.weekend {
+    background-color: #cccccc;
+    color: black;
+}
+
+.has-leave:hover {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+.today {
+    background-color: gold;
+    color: black;
+    font-weight: bold;
+}
+
+.pending {
+    background-color: #FF8000;
+    color: white;
+    /*cursor: pointer;*/
+    font-weight: bold;
+    /*background:linear-gradient(135deg,darkgreen,lightgreen);*/
+    /*border-radius:100%;*/
+}

@@ -21,43 +21,40 @@ namespace EmployeeLeaves.Controllers
         }
         public IActionResult Index(int EmployeeID, int? Year)
         {
-            var employee = _context.Employees.Include(e => e.LeaveRequests).ThenInclude(r => r.RequestedDays).FirstOrDefault<Employee>(e => e.Id == EmployeeID);
-
-            var leaveRequests = _context.LeaveRequests.Include(l => l.Employee).Include(l => l.RequestedDays).Where(l => l.EmployeeId == EmployeeID);
-
+            int _year = Year ?? DateTime.Now.Year;
+            var employee = _context.Employees.Include(e => e.LeaveRequests).ThenInclude(r => r.RequestedDays.Where(k => k.Year == _year)).FirstOrDefault<Employee>(e => e.Id == EmployeeID);
+            
             if (employee == null)
                 return NotFound();
 
             EmployeeStatisticsViewModel employeeStatistics = new EmployeeStatisticsViewModel();
 
             employeeStatistics.Employee = employee;
-            employeeStatistics.Year = Year ?? DateTime.Now.Year;
-
+            employeeStatistics.Year = _year;
             employeeStatistics.LeaveRequests = employee.LeaveRequests.ToList();
-
             employeeStatistics.AnnualLeaveDays = 25;
+            employeeStatistics.LeaveDaysApproved = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Approved).SelectMany(x => x.RequestedDays).Count();
+            employeeStatistics.LeaveDaysPendingApproval = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Pending).SelectMany(x => x.RequestedDays).Count();
+            employeeStatistics.LeaveDaysRejected = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Rejected).SelectMany(x => x.RequestedDays).Count(); ;
+            employeeStatistics.LeaveDaysRemaining = employeeStatistics.AnnualLeaveDays - employeeStatistics.LeaveDaysApproved - employeeStatistics.LeaveDaysPendingApproval - employeeStatistics.LeaveDaysRejected;
 
             var leaveDaysDictionary = employee.LeaveRequests
                 .Where(x => x.Status == RequestStatus.Approved)
                 .SelectMany(x => x.RequestedDays)
-                .Select(i => i.LeaveDay)
+                .Select(i => i.LeaveDay).Where(i => i.Year == _year)
                 .GroupBy(i => i.Month)
-                .Select(i => new { minas = new DateTime(2025, i.Key, 1).ToString("MMM", CultureInfo.InvariantCulture).ToUpper(), count = i.Count() })
+                .Select(i => new { minas = new DateTime(_year, i.Key, 1).ToString("MMM", CultureInfo.InvariantCulture).ToUpper(), count = i.Count() })
                 .ToDictionary(i => i.minas, i => i.count);
 
             var dict = new Dictionary<string, int>();
 
             for (int i = 1; i <= 12; i++)
             {
-                DateOnly d = new DateOnly(2025, i, 1);
+                DateOnly d = new DateOnly(_year, i, 1);
                 string key = d.ToString("MMM", CultureInfo.InvariantCulture).ToUpper();
                 dict.Add(key, GetValueFromDictionary(leaveDaysDictionary, key));
             }
 
-            employeeStatistics.LeaveDaysApproved = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Approved).SelectMany(x => x.RequestedDays).Count();
-            employeeStatistics.LeaveDaysPendingApproval = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Pending).SelectMany(x => x.RequestedDays).Count();
-            employeeStatistics.LeaveDaysRejected = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Rejected).SelectMany(x => x.RequestedDays).Count(); ;
-            employeeStatistics.LeaveDaysRemaining = employeeStatistics.AnnualLeaveDays - employeeStatistics.LeaveDaysApproved - employeeStatistics.LeaveDaysPendingApproval - employeeStatistics.LeaveDaysRejected;
             employeeStatistics.LeaveDaysPerMonth = dict;
 
             return View(employeeStatistics);
