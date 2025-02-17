@@ -318,18 +318,26 @@ namespace EmployeeLeaves.Models
                 new LeaveRequest { Id = 2, EmployeeId = 2, Status = Enums.RequestStatus.Pending, RequestDate = new DateTime(2025, 01, 12), ResponseDate = null },
                 new LeaveRequest { Id = 3, EmployeeId = 3, Status = Enums.RequestStatus.Rejected, RequestDate = new DateTime(2025, 01, 10), ResponseDate = new DateTime(2025, 01, 10) },
                 new LeaveRequest { Id = 4, EmployeeId = 1, Status = Enums.RequestStatus.Pending, RequestDate = new DateTime(2025, 01, 10), ResponseDate = null },
-                new LeaveRequest { Id = 5, EmployeeId = 1, Status = Enums.RequestStatus.Rejected, RequestDate = new DateTime(2025, 01, 10), ResponseDate = new DateTime(2025, 01, 10) }
+                new LeaveRequest { Id = 5, EmployeeId = 1, Status = Enums.RequestStatus.Rejected, RequestDate = new DateTime(2025, 01, 10), ResponseDate = new DateTime(2025, 01, 10) },
+                new LeaveRequest { Id = 6, EmployeeId = 1, Status = Enums.RequestStatus.Approved, RequestDate = new DateTime(2025, 02, 17), ResponseDate = new DateTime(2025, 02, 17) },
+                new LeaveRequest { Id = 7, EmployeeId = 1, Status = Enums.RequestStatus.Approved, RequestDate = new DateTime(2025, 01, 01), ResponseDate = new DateTime(2025, 01, 01) }
             );
 
             modelBuilder.Entity<RequestedDay>().HasData(
-                new RequestedDay { Id = 1, LeaveDay = new DateTime(2025, 2, 1), LeaveRequestId = 1, Year = 2025 },
-                new RequestedDay { Id = 2, LeaveDay = new DateTime(2025, 2, 2), LeaveRequestId = 1, Year = 2025 },
-                new RequestedDay { Id = 3, LeaveDay = new DateTime(2025, 2, 3), LeaveRequestId = 1, Year = 2025 },
+                new RequestedDay { Id = 1, LeaveDay = new DateTime(2025, 2, 3), LeaveRequestId = 1, Year = 2025 },
+                new RequestedDay { Id = 2, LeaveDay = new DateTime(2025, 2, 4), LeaveRequestId = 1, Year = 2025 },
+                new RequestedDay { Id = 3, LeaveDay = new DateTime(2025, 2, 5), LeaveRequestId = 1, Year = 2025 },
                 new RequestedDay { Id = 4, LeaveDay = new DateTime(2025, 2, 1), LeaveRequestId = 2, Year = 2025 },
                 new RequestedDay { Id = 5, LeaveDay = new DateTime(2025, 2, 1), LeaveRequestId = 2, Year = 2025 },
                 new RequestedDay { Id = 6, LeaveDay = new DateTime(2025, 2, 1), LeaveRequestId = 3, Year = 2025 },
                 new RequestedDay { Id = 7, LeaveDay = new DateTime(2025, 6, 1), LeaveRequestId = 4, Year = 2025 },
-                new RequestedDay { Id = 8, LeaveDay = new DateTime(2025, 4, 1), LeaveRequestId = 5, Year = 2025 }
+                new RequestedDay { Id = 8, LeaveDay = new DateTime(2025, 4, 1), LeaveRequestId = 5, Year = 2025 },
+                new RequestedDay { Id = 9, LeaveDay = new DateTime(2025, 3, 3), LeaveRequestId = 6, Year = 2025 },
+                new RequestedDay { Id = 10, LeaveDay = new DateTime(2025, 3, 4), LeaveRequestId = 6, Year = 2025 },
+                new RequestedDay { Id = 11, LeaveDay = new DateTime(2025, 3, 5), LeaveRequestId = 6, Year = 2025 },
+                new RequestedDay { Id = 12, LeaveDay = new DateTime(2025, 3, 6), LeaveRequestId = 6, Year = 2025 },
+                new RequestedDay { Id = 13, LeaveDay = new DateTime(2025, 3, 7), LeaveRequestId = 6, Year = 2025 },
+                new RequestedDay { Id = 14, LeaveDay = new DateTime(2025, 1, 1), LeaveRequestId = 7, Year = 2025 }
             );
 
 

@@ -33,10 +33,11 @@ namespace EmployeeLeaves.Controllers
             employeeStatistics.Year = _year;
             employeeStatistics.LeaveRequests = employee.LeaveRequests.ToList();
             employeeStatistics.AnnualLeaveDays = 25;
-            employeeStatistics.LeaveDaysApproved = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Approved).SelectMany(x => x.RequestedDays).Count();
+            employeeStatistics.LeaveDaysApprovedList = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Approved).SelectMany(x => x.RequestedDays.Select(i => i.LeaveDay)).ToList();
+            //employeeStatistics.LeaveDaysApproved = employeeStatistics.LeaveDaysApprovedList.Count(); // employee.LeaveRequests.Where(x => x.Status == RequestStatus.Approved).SelectMany(x => x.RequestedDays).Count();            
             employeeStatistics.LeaveDaysPendingApproval = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Pending).SelectMany(x => x.RequestedDays).Count();
             employeeStatistics.LeaveDaysRejected = employee.LeaveRequests.Where(x => x.Status == RequestStatus.Rejected).SelectMany(x => x.RequestedDays).Count(); ;
-            employeeStatistics.LeaveDaysRemaining = employeeStatistics.AnnualLeaveDays - employeeStatistics.LeaveDaysApproved - employeeStatistics.LeaveDaysPendingApproval;
+            employeeStatistics.LeaveDaysRemaining = employeeStatistics.AnnualLeaveDays - employeeStatistics.LeaveDaysApprovedList.Count() - employeeStatistics.LeaveDaysPendingApproval;
 
             var leaveDaysDictionary = employee.LeaveRequests
                 .Where(x => x.Status == RequestStatus.Approved)

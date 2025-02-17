@@ -442,11 +442,11 @@
 
                 <table id="legend" style="width: 100%; margin-top:15px; font-size:small" cellspacing="5" cellpadding="5">
                     <tr style="height:20px;">
-                        <td style="width:30px; background-color:#cccccc;"></td>
+                    <td style="width:30px;"><i class='fas fa-circle' style="font-size:24px;color:#CCC"></i></td>
                         <td>Weekend</td>
-                        <td style="width:30px; background-color:gold;"></td>
+                    <td style="width:30px;"><i class='fas fa-circle' style="font-size:24px;color:gold"></i></td>
                         <td>Today</td>
-                        <td style="width:30px; background-color:#228B22;"></td>
+                    <td style="width:30px;"><i class='fas fa-circle' style="font-size:24px;color:#228B22"></i></td>
                         <td>Leave days</td>
                     </tr>
                 </table>
@@ -528,7 +528,7 @@
 
 <script>
     var xValues = ["Approved", "Pending", "Rejected", "Remaining"];
-    var yValues = [@Model.LeaveDaysApproved, @Model.LeaveDaysPendingApproval, @Model.LeaveDaysRejected, @Model.LeaveDaysRemaining];
+    var yValues = [@Model.LeaveDaysApprovedList.Count(), @Model.LeaveDaysPendingApproval, @Model.LeaveDaysRejected, @Model.LeaveDaysRemaining];
     var barColors = [
       'rgba(0, 200, 0, 0.2)',
       'rgba(255, 159, 64, 0.2)',
@@ -601,38 +601,15 @@
         }
       }
     });
+
+    const days = [];
+    
+    @foreach(DateTime d in @Model.LeaveDaysApprovedList) {
+        @:days.push(new Date(@d.Year, @(d.Month-1), @d.Day));
+    }
+
+    DrawCalendar(@Model.Year, days);
+
 </script>
-
-@* @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#CurrentYear").val(@Model.Year);
-
-            $("#btnNextYear").on('click', function () {
-                if (parseInt($("#CurrentYear").val()) == new Date().getFullYear() + 1) {
-                    return;
-                }
-                $("#CurrentYear").val(parseInt($("#CurrentYear").val()) + 1);
-            });
-
-
-            $("#btnPrevYear").on('click', function () {
-                $("#CurrentYear").val(parseInt($("#CurrentYear").val()) - 1);
-
-                        $.ajax({
-            // edit to add steve's suggestion.
-            //url: "/ControllerName/ActionName",
-            url: "EmployeeStatistics/Index?employeeid="+@Model.Employee.Id+"&Year="+$("#CurrentYear").val(),
-            success: function(data) {
-                 // your data could be a View or Json or what ever you returned in your action method
-                 // parse your data here
-                 //alert(data);
-            }
-        });
-            });
-        });
-    </script>
-} *@
-
 
 
